@@ -34,7 +34,7 @@ services:
       - mysql
       - bank-emulator
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/app
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3307/app
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=pass
       - SPRING_CREDIT-GATE_URL=http://bank-emulator:9999
