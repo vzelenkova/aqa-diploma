@@ -1,5 +1,6 @@
-# Project exclude paths
-/.gradle/
-/build/
-/build/classes/java/main/
-/build/classes/java/test/
+Thumbs.db*
+.DS_Store*
+node_modules
+.idea
+target
+*.iml
