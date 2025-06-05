@@ -16,7 +16,7 @@ public class CreditCardTest {
     @BeforeEach
     void setUp() {
         Configuration.headless = true;
-        open("http://localhost:8080"); // Заменить на актуальный порт приложения
+        open("http://localhost:8080"); 
     }
 
     @Test
