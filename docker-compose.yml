@@ -1,0 +1,89 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    restart: always
+
+  bank-emulator:
+    build: ./bank-emulator
+    container_name: bank-emulator
+    ports:
+      - "9999:9999"
+    restart: always
+
+  aqa-shop:
+    image: aqa-shop
+    container_name: aqa-shop
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - bank-emulator
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/app
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pass
+      - SPRING_CREDIT-GATE_URL=http://bank-emulator:9999
+      - SPRING_PAYMENT-GATE_URL=http://bank-emulator:9999
+    restart: always
+
+#version: '3.8'
+#
+#services:
+#  app:
+#    image: openjdk:17
+#    container_name: tour-app
+#    volumes:
+#      - ./app:/app
+#    working_dir: /app
+#    command: ["java", "-jar", "aqa-shop.jar"]
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - mysql
+#      - SPRING_CREDIT-GATE_URL=http://bank-emulator:9999
+#      - SPRING_PAYMENT-GATE_URL=http://bank-emulator:9999
+#
+#  bank-emulator:
+#    build: ./bank-emulator
+#    ports:
+#      - "9999:9999"
+#
+#
+#  aqa-shop:
+#      image: aqa-shop
+#      ports:
+#        - "8080:8080"
+#      depends_on:
+#        - bank-emulator
+#      environment:
+#        - SPRING_CREDIT-GATE_URL=http://bank-emulator:9999
+#        - SPRING_PAYMENT-GATE_URL=http://bank-emulator:9999
+#
+#  mysql:
+#    image: mysql:8.0
+#    ports:
+#      - "3307:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: pass
+#      MYSQL_DATABASE: app
+#    volumes:
+#      - db-data:/var/lib/mysql
+#
+#volumes:
+#  db-data:
+
