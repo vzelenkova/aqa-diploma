@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.*;
 
 public class ApiTest {
 
-    private final String baseUri = "http://localhost:8080"; // Подставь порт твоего backend-приложения
+    private final String baseUri = "http://localhost:8080";
 
     @Test
     void shouldReturnSuccessForApprovedCardPayment() {
